@@ -11,18 +11,13 @@ function createRandomPost() {
 }
 
 const PostProvider = ({ children }) => {
-  const [posts, setPosts] = useState(() =>
-    Array.from({ length: 30 }, () => createRandomPost())
-  );
+  const [posts, setPosts] = useState(() => Array.from({ length: 30 }, () => createRandomPost()));
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Derived state. These are the posts that will actually be displayed
   const searchedPosts =
     searchQuery.length > 0
       ? posts.filter(post =>
-          `${post.title} ${post.body}`
-            .toLowerCase()
-            .includes(searchQuery.toLowerCase())
+          `${post.title} ${post.body}`.toLowerCase().includes(searchQuery.toLowerCase())
         )
       : posts;
 
@@ -35,7 +30,6 @@ const PostProvider = ({ children }) => {
   }
 
   return (
-    // 2-) Provide value to child components
     <PostContext.Provider
       value={{
         posts: searchedPosts,
@@ -52,8 +46,7 @@ const PostProvider = ({ children }) => {
 
 const usePosts = () => {
   const context = useContext(PostContext);
-  if (!context)
-    throw new Error('PostContext was used outside of the PostProvider!');
+  if (!context) throw new Error('PostContext was used outside of the PostProvider!');
   return context;
 };
 
